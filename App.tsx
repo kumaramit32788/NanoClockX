@@ -18,6 +18,9 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
+const ANDROID_VERSION_CODE = 7;
+const APP_VERSION_NAME = '1.0.3';
+
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -28,7 +31,7 @@ function App() {
           styles.safeArea,
           isDarkMode ? styles.darkContainer : styles.lightContainer,
         ]}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
         <ClockScreen isDarkMode={isDarkMode} />
       </View>
     </SafeAreaProvider>
@@ -152,6 +155,16 @@ function ClockScreen({ isDarkMode }: { isDarkMode: boolean }) {
             isLandscape={isLandscape}
           />
         </View>
+      </View>
+
+      <View style={styles.versionContainer}>
+        <Text
+          style={[
+            styles.versionText,
+            isDarkMode ? styles.darkTextSecondary : styles.lightTextSecondary,
+          ]}>
+          Version {APP_VERSION_NAME} ({ANDROID_VERSION_CODE})
+        </Text>
       </View>
     </View>
   );
@@ -301,6 +314,15 @@ const styles = StyleSheet.create({
   },
   lightTextSecondary: {
     color: '#666666',
+  },
+  versionContainer: {
+    alignItems: 'center',
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+  },
+  versionText: {
+    fontSize: 12,
+    letterSpacing: 1,
   },
 });
 
