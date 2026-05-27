@@ -1,0 +1,62 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Build release AAB and upload to Google Play production"
+  lane :deploy do
+    gradle(
+      task: "bundleRelease",
+      project_dir: "./"
+    )
+    upload_to_play_store(
+      track: "production",
+      aab: "app/build/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Build AAB and upload to Play Store internal track"
+  lane :deploy_internal do
+    gradle(
+      task: "bundleRelease",
+      project_dir: "./"
+    )
+    upload_to_play_store(
+      track: "internal",
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Promote internal build to production"
+  lane :deploy_production do
+    upload_to_play_store(
+      track: "internal",
+      track_promote_to: "production",
+      # Promotion doesn't need re-uploading store listing assets
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
+    )
+  end
+end

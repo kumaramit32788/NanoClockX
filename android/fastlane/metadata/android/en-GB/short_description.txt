@@ -1,0 +1,1 @@
+A precise, elegant clock app displaying real-time hours, minutes, and seconds.

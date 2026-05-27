@@ -18,7 +18,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
-const ANDROID_VERSION_CODE = 7;
+const ANDROID_VERSION_CODE = 8;
 const APP_VERSION_NAME = '1.0.3';
 
 function App() {
